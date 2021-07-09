@@ -18,5 +18,7 @@ CHIP-8 has the following components:
  */
 
 fun main() {
+    val register = Register("V0", 0x00)
     println("hello world!")
+    println(register)
 }
