@@ -1,2 +1,5 @@
-class Keyboard {
+object Keyboard {
+
+    var keys = ByteArray(16)
+
 }

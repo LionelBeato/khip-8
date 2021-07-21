@@ -1,10 +1,38 @@
 import java.util.*
 
-class Memory {
+object Memory {
 
     // memory declared as a variable
     // 4 KBs
     var memory = ByteArray(4096)
+
+    init {
+        val fontSet =
+            arrayOf(
+                0xF0, 0x90, 0x90, 0x90, 0xF0,  // 0
+                0x20, 0x60, 0x20, 0x20, 0x70,  // 1
+                0xF0, 0x10, 0xF0, 0x80, 0xF0,  // 2
+                0xF0, 0x10, 0xF0, 0x10, 0xF0,  // 3
+                0x90, 0x90, 0xF0, 0x10, 0x10,  // 4
+                0xF0, 0x80, 0xF0, 0x10, 0xF0,  // 5
+                0xF0, 0x80, 0xF0, 0x90, 0xF0,  // 6
+                0xF0, 0x10, 0x20, 0x40, 0x40,  // 7
+                0xF0, 0x90, 0xF0, 0x90, 0xF0,  // 8
+                0xF0, 0x90, 0xF0, 0x10, 0xF0,  // 9
+                0xF0, 0x90, 0xF0, 0x90, 0x90,  // A
+                0xE0, 0x90, 0xE0, 0x90, 0xE0,  // B
+                0xF0, 0x80, 0x80, 0x80, 0xF0,  // C
+                0xE0, 0x90, 0x90, 0x90, 0xE0,  // D
+                0xF0, 0x80, 0xF0, 0x80, 0xF0,  // E
+                0xF0, 0x80, 0xF0, 0x80, 0x80   // F
+            )
+        for (i in 80.. 160) {
+            memory[i] = fontSet[79].toByte()
+        }
+    }
+
+//    - 16 8-bit (one byte) general-purpose variable registers numbered 0 through F hexadecimal, ie. 0 through 15 in decimal, called V0 through `VF
+//    - VF is also used as a flag register; many instructions will set it to either 1 or 0 based on some rule, for example using it as a carry flag
 
     var indexRegister = Register("index", 0)
     var V0 = Register("V0", 0)
@@ -36,7 +64,7 @@ class Memory {
 
     // fontset for the chip-8
     // taken from here: https://austinmorlan.com/posts/chip8_emulator/#what-is-an-emulator
-    val fontSet = {
+    val fontSet =
             arrayOf(
                 0xF0, 0x90, 0x90, 0x90, 0xF0,  // 0
                 0x20, 0x60, 0x20, 0x20, 0x70,  // 1
@@ -55,6 +83,6 @@ class Memory {
                 0xF0, 0x80, 0xF0, 0x80, 0xF0,  // E
                 0xF0, 0x80, 0xF0, 0x80, 0x80   // F
             )
-    }
+
 
 }
