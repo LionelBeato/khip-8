@@ -1,26 +1,23 @@
 
 import kotlin.test.Test
+import ProgramCounter.currentInstruction as pc
+
 
 internal class Chip8Test {
 
     @Test
     fun test() {
-      var computer = Chip8(
-          register = Registers.all,
-          memory = Memory.memory,
-          index = Register("index", 0),
-          pc = 0,
-          stack = Memory.stack,
-          sp = 0,
-          delayTimer = Timer(),
-          keyPad = Keyboard.keys,
-          display = Display(),
-          opcode = 0x200,
-      )
 
-        computer.loadRom("stars.ch8")
+//        loadRom("ibm.ch8")
+//        opCode = 0x7522
+////        val string = Integer.toHexString(VX)
+//        decode()
+////        println("VX is: $string")
+//        println((opCode and 0xFFF) shr 8)
+//        println(opCode)
 
-        computer.memory.forEach { println(it) }
+
+
 
     }
 

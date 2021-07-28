@@ -1,15 +1,9 @@
 import java.util.*
 
-class Display {
+object Display {
 
-    // 2D array of boolean values
-    var screen = Array(32) { BooleanArray(64) }
-
-    // One 16-bit index register called “I”
-    // which is used to point at locations in memory
-
-
-
+    // Display: 64 x 32 pixels (or 128 x 64 for SUPER-CHIP) monochrome, ie. black or white
+    var screen = Array(32) { IntArray(64) }
 
 
 }

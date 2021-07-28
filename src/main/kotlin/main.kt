@@ -17,8 +17,106 @@ CHIP-8 has the following components:
 
  */
 
-fun main() {
-    val register = Register("V0", 0x00)
-    println("hello world!")
-    println(register)
+import Memory.memory
+import androidx.compose.desktop.Window
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
+import java.io.File
+import ProgramCounter.currentInstruction as pc
+
+
+fun fetch() {
+    opCode = (memory[pc].toInt() shl 8) or (memory[pc + 1].toInt())
+    pc =(pc + 2)
 }
+
+fun decode() {
+
+    //    println("This is the decoded opcode: $decoded")
+    when ((opCode and 0xF000) shr 12) {
+        0x0 -> {
+            OP_00E0()
+        }
+        0x1 -> {
+            OP_1NNN()
+        }
+        0x6 -> {
+            OP_6xNN()
+        }
+        0x7 -> {
+            OP_7xNN()
+        }
+        0xA -> {
+            OP_ANNN()
+        }
+        0xD -> {
+            OP_DXYN()
+        }
+    }
+}
+
+fun execute(OP_CODE: UByte) {
+
+
+}
+
+@Composable
+fun screen(display: Display) {
+    Column (Modifier.verticalScroll(enabled = true, state = ScrollState(0))) {
+        display.screen.forEach { row -> Row {
+            row.forEach {
+                if (it > 0)
+                    Box(Modifier.size(10.dp).background(color = Color.White))
+                else
+                    Box(Modifier.size(10.dp).background(color = Color.Black))
+                }
+            }
+      }
+//        display.screen.forEach {
+//            if (it > 0)
+//                Box(Modifier.size(10.dp).background(color = Color.White))
+//            else
+//                Box(Modifier.size(10.dp).background(color = Color.Black))
+//            }
+        }
+    }
+
+
+fun loadRom(fileName: String) {
+    val file = File(fileName).inputStream().readBytes().asUByteArray()
+    println(file)
+    for (i in file.indices) {
+//        println("at index $i")
+        memory[0x200 + i] = file[i]
+    }
+}
+
+fun cycle() {
+    for(i in 0..100) {
+        fetch()
+        decode()
+    }
+}
+
+fun main() = Window(
+    title = "Compose for Desktop",
+    size = IntSize(640, 320),
+    resizable = false ) {
+
+    MaterialTheme {
+        loadRom("ibm.ch8")
+
+        cycle()
+        screen(Display)
+    }
+}
+
+

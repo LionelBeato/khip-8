@@ -4,12 +4,20 @@ internal class DisplayTest {
 
     @Test
     fun testArray() {
-        var screen = Display().screen
-
-        for (i in screen) {
+        loadRom("ibm.ch8")
+        cycle()
+        for (i in Display.screen) {
             for (j in i) {
-                if (j == false)
-                print(" ▇▇")
+                if (j == 0)
+                print(" ▇▇") else print("   ")
+            }
+            println()
+        }
+        OP_00E0()
+        for (i in Display.screen) {
+            for (j in i) {
+                if (j == 0)
+                    print(" ▇▇") else print("   ")
             }
             println()
         }
